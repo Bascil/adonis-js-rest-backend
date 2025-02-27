@@ -55,13 +55,18 @@
    ```
 
 4. Run migrations
+
+   ```
    node ace migration:run
+   ```
 
 5. Setup Controllers
+
    ```
    node ace make:controller users
    node ace make:controller tasks
    ```
+
 6. Setup Seeders
 
    ```
