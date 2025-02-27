@@ -1,3 +1,37 @@
+# AdonisJS REST Backend
+
+## Project Setup
+
+1. Clone the repository via git:
+
+   ```bash
+   git clone git@github.com:Bascil/adonis-js-rest-backend.git
+
+   ```
+
+2. change directory
+
+   ```
+   cd adonis-js-rest-backend.git
+   ```
+
+3. copy .env.example to .env file and modify database settings
+
+   ```
+   cp .env.example .env
+   ```
+
+4. install dependencies
+
+   ```
+   npm install
+   ```
+
+5. run the project
+   ```
+   npm run dev
+   ```
+
 # useful commands
 
 1. Start the http server
