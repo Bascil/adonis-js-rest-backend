@@ -32,7 +32,7 @@
    npm run dev
    ```
 
-# useful commands
+# useful adonis commands
 
 1. Start the http server
 
