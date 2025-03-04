@@ -2,6 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
 import { createUserValidator } from '#validators/user'
 import { formatValidationError } from '#utils/validation'
+import vine, { errors } from '@vinejs/vine'
 import hash from '@adonisjs/core/services/hash'
 
 export default class UsersController {
@@ -32,14 +33,13 @@ export default class UsersController {
         user,
       })
     } catch (error) {
-      return response.unprocessableEntity(formatValidationError(error))
-      // if (error instanceof ValidationException) {
-      //   return response.unprocessableEntity(formatValidationError(error))
-      // }
+      if (error instanceof errors.E_VALIDATION_ERROR) {
+        return response.unprocessableEntity(formatValidationError(error))
+      }
 
-      // return response.internalServerError({
-      //   error: error.message,
-      // })
+      return response.internalServerError({
+        error: error.message,
+      })
     }
   }
 
