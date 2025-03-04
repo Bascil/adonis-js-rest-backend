@@ -9,8 +9,11 @@ export default class extends BaseSchema {
       table.string('first_name')
       table.string('last_name')
       table.string('email')
+      table.string('phone_number')
+      table.string('address').nullable()
       table.string('password')
-
+      table.boolean('active').defaultTo(true)
+      table.integer('role_id')
       table.timestamp('created_at')
       table.timestamp('updated_at')
     })

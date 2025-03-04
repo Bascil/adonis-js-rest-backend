@@ -1,5 +1,8 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
+import { createUserValidator } from '#validators/user'
+import { formatValidationError } from '#utils/validation'
+import hash from '@adonisjs/core/services/hash'
 
 export default class UsersController {
   public async getUsers({ response }: HttpContext) {
@@ -18,18 +21,25 @@ export default class UsersController {
 
   public async createUser({ request, response }: HttpContext) {
     try {
-      const data = await request.body()
-      const user = await User.create(data)
+      const data = await request.all()
+      const payload = await createUserValidator.validate(data)
+
+      const password = await hash.make(payload.password)
+      const user = await User.create({ ...payload, password })
 
       return response.created({
         message: 'User created successfully',
         user,
       })
     } catch (error) {
-      return response.internalServerError({
-        message: 'Failed to create user',
-        error: error.message,
-      })
+      return response.unprocessableEntity(formatValidationError(error))
+      // if (error instanceof ValidationException) {
+      //   return response.unprocessableEntity(formatValidationError(error))
+      // }
+
+      // return response.internalServerError({
+      //   error: error.message,
+      // })
     }
   }
 

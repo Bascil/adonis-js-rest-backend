@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 
-export default class Task extends BaseModel {
+export default class Project extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
@@ -11,11 +11,11 @@ export default class Task extends BaseModel {
   @column({ columnName: 'description' })
   declare description: string
 
-  @column({ columnName: 'due_date' })
-  declare dueDate?: DateTime
+  @column({ columnName: 'start_date' })
+  declare startDate: DateTime
 
-  @column({ columnName: 'project_id' })
-  declare projectId: number
+  @column({ columnName: 'end_date' })
+  declare endDate?: DateTime
 
   @column({ columnName: 'user_id' })
   declare userId: number

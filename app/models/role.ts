@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 
-export default class Task extends BaseModel {
+export default class Role extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
@@ -9,19 +9,13 @@ export default class Task extends BaseModel {
   declare name: string
 
   @column({ columnName: 'description' })
-  declare description: string
+  declare description?: string
 
-  @column({ columnName: 'due_date' })
-  declare dueDate?: DateTime
-
-  @column({ columnName: 'project_id' })
-  declare projectId: number
-
-  @column({ columnName: 'user_id' })
-  declare userId: number
-
-  @column({ columnName: 'status' })
-  declare status: string
+  @column({
+    prepare: (value: string[] | object) => JSON.stringify(value),
+    consume: (value: string) => JSON.parse(value),
+  })
+  declare permissions: string[]
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
