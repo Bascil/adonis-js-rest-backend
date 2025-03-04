@@ -2,7 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
 import { createUserValidator } from '#validators/user'
 import { formatValidationError } from '#utils/validation'
-import vine, { errors } from '@vinejs/vine'
+import { errors } from '@vinejs/vine'
 import hash from '@adonisjs/core/services/hash'
 
 export default class UsersController {
