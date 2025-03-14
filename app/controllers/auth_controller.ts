@@ -13,8 +13,7 @@ export default class AuthController {
       const { email, password } = payload
       const user = await User.verifyCredentials(email, password)
 
-      // Generate token and extract only the token string
-      const { token } = (await auth.use('jwt').generate(user)) as { token: string }
+      const token = await user.generateToken(auth) // Generate jwt token
       return response.ok({ data: { token, user } })
     } catch (error) {
       if (error instanceof errors.E_VALIDATION_ERROR) {

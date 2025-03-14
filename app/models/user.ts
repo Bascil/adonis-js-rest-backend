@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, beforeSave, computed } from '@adonisjs/lucid/orm'
 import hash from '@adonisjs/core/services/hash'
+import { Authenticator } from '@adonisjs/auth'
+import { Authenticators } from '@adonisjs/auth/types'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -62,5 +64,13 @@ export default class User extends BaseModel {
     }
 
     return user
+  }
+
+  /**
+   * Generate authentication token
+   */
+  async generateToken(auth: Authenticator<Authenticators>) {
+    const { token } = (await auth.use('jwt').generate(this)) as { token: string }
+    return token
   }
 }
