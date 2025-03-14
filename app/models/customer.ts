@@ -5,22 +5,22 @@ export default class Customer extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
-  @column({ columnName: 'first_name' })
+  @column()
   declare firstName: string
 
-  @column({ columnName: 'last_name' })
+  @column()
   declare lastName: string
 
-  @column({ columnName: 'email' })
+  @column()
   declare email: string
 
-  @column({ columnName: 'phone_number' })
+  @column()
   declare phoneNumber: string
 
-  @column({ columnName: 'address' })
+  @column()
   declare address?: string
 
-  @column({ columnName: 'active' })
+  @column()
   declare active: boolean
 
   @column.dateTime({ autoCreate: true })

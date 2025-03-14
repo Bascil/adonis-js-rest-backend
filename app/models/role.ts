@@ -5,10 +5,10 @@ export default class Role extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
-  @column({ columnName: 'name' })
+  @column()
   declare name: string
 
-  @column({ columnName: 'description' })
+  @column()
   declare description?: string
 
   @column({

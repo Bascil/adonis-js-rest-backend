@@ -1,7 +1,6 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, beforeSave, computed } from '@adonisjs/lucid/orm'
 import hash from '@adonisjs/core/services/hash'
-import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -52,7 +51,6 @@ export default class User extends BaseModel {
     }
   }
 
-  static accessTokens = DbAccessTokensProvider.forModel(User)
   /**
    * Verify user credentials
    */

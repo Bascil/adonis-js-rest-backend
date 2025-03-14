@@ -5,22 +5,22 @@ export default class Project extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
-  @column({ columnName: 'name' })
+  @column()
   declare name: string
 
-  @column({ columnName: 'description' })
+  @column()
   declare description: string
 
-  @column({ columnName: 'start_date' })
+  @column()
   declare startDate: DateTime
 
-  @column({ columnName: 'end_date' })
+  @column()
   declare endDate?: DateTime
 
-  @column({ columnName: 'user_id' })
+  @column()
   declare userId: number
 
-  @column({ columnName: 'status' })
+  @column()
   declare status: string
 
   @column.dateTime({ autoCreate: true })

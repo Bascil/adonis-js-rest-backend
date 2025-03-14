@@ -5,22 +5,22 @@ export default class Task extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
-  @column({ columnName: 'name' })
+  @column()
   declare name: string
 
-  @column({ columnName: 'description' })
+  @column()
   declare description: string
 
-  @column({ columnName: 'due_date' })
+  @column()
   declare dueDate?: DateTime
 
-  @column({ columnName: 'project_id' })
+  @column()
   declare projectId: number
 
-  @column({ columnName: 'user_id' })
+  @column()
   declare userId: number
 
-  @column({ columnName: 'status' })
+  @column()
   declare status: string
 
   @column.dateTime({ autoCreate: true })
