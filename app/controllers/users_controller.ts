@@ -4,11 +4,15 @@ import { createUserValidator } from '#validators/user'
 import { formatValidationError } from '#utils/validation'
 import { errors } from '@vinejs/vine'
 import hash from '@adonisjs/core/services/hash'
+import PaginationTrait from '#traits/pagination_trait'
 
-export default class UsersController {
-  public async getUsers({ response }: HttpContext) {
-    const users = await User.all()
-    return response.ok(users)
+export default class UsersController extends PaginationTrait {
+  public async getUsers({ request, response }: HttpContext) {
+    const page = request.input('page', 1)
+    const perPage = request.input('perPage', 10)
+
+    const users = await User.query().orderBy('id', 'desc').paginate(page, perPage)
+    return response.ok(this.transform(users.serialize()))
   }
   public async getUser({ params, response }: HttpContext) {
     const id = params.id

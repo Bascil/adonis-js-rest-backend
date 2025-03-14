@@ -1,32 +1,34 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, beforeSave, computed } from '@adonisjs/lucid/orm'
+import hash from '@adonisjs/core/services/hash'
+import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
-  @column({ columnName: 'first_name' })
+  @column()
   declare firstName: string
 
-  @column({ columnName: 'last_name' })
+  @column()
   declare lastName: string
 
-  @column({ columnName: 'email' })
+  @column()
   declare email: string
 
-  @column({ columnName: 'phone_number' })
+  @column()
   declare phoneNumber: string
 
-  @column({ columnName: 'address' })
+  @column()
   declare address?: string
 
-  @column({ columnName: 'password' })
+  @column({ serializeAs: null })
   declare password: string
 
-  @column({ columnName: 'active' })
+  @column()
   declare active: boolean
 
-  @column({ columnName: 'role_id' })
+  @column()
   declare roleId: number
 
   @column.dateTime({ autoCreate: true })
@@ -34,4 +36,33 @@ export default class User extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
+
+  @computed()
+  get fullName() {
+    return `${this.firstName} ${this.lastName}`
+  }
+
+  /**
+   * Hash the password before saving
+   */
+  @beforeSave()
+  static async hashPassword(user: User) {
+    if (user.$dirty.password) {
+      user.password = await hash.make(user.password)
+    }
+  }
+
+  static accessTokens = DbAccessTokensProvider.forModel(User)
+  /**
+   * Verify user credentials
+   */
+  static async verifyCredentials(email: string, password: string) {
+    const user = await this.findByOrFail('email', email)
+
+    if (!(await hash.verify(user.password, password))) {
+      throw new Error('Invalid credentials')
+    }
+
+    return user
+  }
 }
